@@ -14,7 +14,19 @@ import java.util.Arrays;
 import java.util.Date;
 
 @Component
-public class DrLibRequestController {
+public class DrLibController {
+
+    public boolean isAvailable(DrLibParams params) {
+        return isAvailable(
+                params.getVisitMotiveIds(),
+                params.getAgendaIds(),
+                params.getPracticeIds(),
+                params.getInsuranceSector(),
+                params.isTelehealth(),
+                params.getLimt(),
+                params.getStartDate()
+        );
+    }
 
     public boolean isAvailable(long visitMotiveIds, int agendaIds, int practiceIds, String insuranceSector, boolean telehealth, int limt, Date startDate) {
         String url = buildUrl(visitMotiveIds, agendaIds, practiceIds, insuranceSector, telehealth, limt, startDate);
