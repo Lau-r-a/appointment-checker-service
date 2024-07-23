@@ -24,10 +24,4 @@ public class DrLibParams {
 
     @Schema(example = "false", required = true)
     private boolean telehealth;
-
-    @Schema(example = "5", required = true)
-    private int limt;
-
-    @Schema(example = "10-09-2024", required = true)
-    private Date startDate;
 }
