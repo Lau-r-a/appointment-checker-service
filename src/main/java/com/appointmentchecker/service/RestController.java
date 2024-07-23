@@ -3,10 +3,10 @@ package com.appointmentchecker.service;
 import com.appointmentchecker.service.drlib.DrLibController;
 import com.appointmentchecker.service.drlib.DrLibParams;
 import com.appointmentchecker.service.entities.Notification;
-import com.appointmentchecker.service.entities.NotificationTarget;
+import com.appointmentchecker.service.entities.NotificationMapping;
 import com.appointmentchecker.service.entities.User;
-import com.appointmentchecker.service.repositories.NotificationTargetRepository;
-import com.appointmentchecker.service.repositories.UserRepository;
+import com.appointmentchecker.service.facade.NotificationFacade;
+import com.appointmentchecker.service.facade.UserFacade;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,9 +21,9 @@ public class RestController {
     @Autowired
     DrLibController drLibController;
     @Autowired
-    NotificationTargetRepository notificationTargetRepository;
+    NotificationFacade notificationFacade;
     @Autowired
-    UserRepository userRepository;
+    UserFacade userFacade;
 
     @GetMapping("/")
     public String index() throws JsonProcessingException {
@@ -36,33 +36,23 @@ public class RestController {
         return Boolean.toString(drLibController.isAvailable(drLibParams));
     }
 
-    @PutMapping("/createUser")
+    @PutMapping("/user")
     public User createUser(@RequestParam String userId) {
-        User user = new User(userId, null);
-        return userRepository.save(user);
+        return userFacade.createUser(userId);
     }
 
-    @PutMapping("/createNotification")
+    @PutMapping("/notification")
     public Notification createNotification(@RequestBody DrLibParams drLibParams, @RequestParam String userId) {
-
-        Optional<User> user = userRepository.findById(userId);
-
-        if(user.isEmpty()) {
-            throw new IllegalArgumentException("User invalid");
-        }
-
-        Notification notification = new Notification(UUID.randomUUID().toString(), user.get());
-        NotificationTarget target = notificationTargetRepository.findByDrLibParams(drLibParams);
-        if (target == null) {
-            List<Notification> notificationList = new ArrayList<>();
-            notificationList.add(notification);
-            target = new NotificationTarget(drLibParams, notificationList);
-        } else {
-            List<Notification> notificationList = target.getNotificationList();
-            notificationList.add(notification);
-        }
-        notificationTargetRepository.save(target);
-        return notification;
+        return notificationFacade.createNotification(drLibParams, userFacade.getUserById(userId));
     }
 
+   @GetMapping("/notifications")
+   public List<NotificationMapping> getNotifications(@RequestParam String userId) {
+        return notificationFacade.getNotificationMappings(userFacade.getUserById(userId));
+   }
+
+   @DeleteMapping("/notification")
+    public void deleteNotifications(@RequestParam String notificationId) {
+        notificationFacade.deleteNotification(notificationId);
+   }
 }
