@@ -7,5 +7,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import java.util.List;
 
 public interface NotificationRepository extends MongoRepository<Notification, String> {
-    public List<Notification> findByUser(User user);
+    List<Notification> findByUser(User user);
 }

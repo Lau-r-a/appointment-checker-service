@@ -5,10 +5,7 @@ import com.appointmentchecker.service.entities.Notification;
 import com.appointmentchecker.service.entities.NotificationTarget;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-import java.util.List;
-
 public interface NotificationTargetRepository extends MongoRepository<NotificationTarget, String> {
-    public NotificationTarget findByDrLibParams(DrLibParams drLibParams);
-    public NotificationTarget findByNotificationListContaining(Notification notificationList);
-
+    NotificationTarget findByDrLibParams(DrLibParams drLibParams);
+    NotificationTarget findByNotificationListContaining(Notification notificationList);
 }
