@@ -6,6 +6,8 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.web.SecurityFilterChain;
 
+import static org.springframework.security.config.Customizer.withDefaults;
+
 @Configuration(proxyBeanMethods = false)
 @EnableWebSecurity
 public class OAuthClientConfiguration {
@@ -19,11 +21,7 @@ public class OAuthClientConfiguration {
                         .requestMatchers("/api-docs").permitAll()
                         .anyRequest().authenticated()
                 )
-                .oauth2Login((login) -> login
-                        .redirectionEndpoint((endpoint) -> endpoint
-                                .baseUri("/login/oauth2/callback/*")
-                        )
-                );
+                .oauth2Login((withDefaults()));
         return http.build();
     }
 

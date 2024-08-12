@@ -8,13 +8,14 @@ import com.appointmentchecker.service.entities.User;
 import com.appointmentchecker.service.facade.NotificationFacade;
 import com.appointmentchecker.service.facade.UserFacade;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
-
+@SecurityRequirement(name = "security_auth")
 @org.springframework.web.bind.annotation.RestController
 public class RestController {
 
