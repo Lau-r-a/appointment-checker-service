@@ -1,7 +1,6 @@
 package com.appointmentchecker.service.security;
 
 import com.appointmentchecker.service.discord.DiscordController;
-import com.appointmentchecker.service.entities.User;
 import com.appointmentchecker.service.facade.UserFacade;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -35,8 +34,10 @@ public class TokenValidationFilter extends OncePerRequestFilter {
         if (authHeader != null && authHeader.startsWith("Bearer ") && !authHeader.substring(7).isBlank()) {
             String accessToken = authHeader.substring(7);
             try {
-                User user = isTokenValid(accessToken);
-                Authentication authenticationToken = new UsernamePasswordAuthenticationToken(user.getId(), accessToken, null);
+                String userId = getUserIdIfValidToken(accessToken);
+                userFacade.createOrUpdateUser(userId, accessToken);
+
+                Authentication authenticationToken = new UsernamePasswordAuthenticationToken(userId, accessToken, null);
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             } catch (InvalidTokenException e) {
                 logger.error("Can not validate token '{}': {}", accessToken, e.getMessage());
@@ -48,12 +49,15 @@ public class TokenValidationFilter extends OncePerRequestFilter {
         filterChain.doFilter(request, response);
     }
 
-    private User isTokenValid(String accessToken) {
+    private String getUserIdIfValidToken(String accessToken) {
 
-        String userId = discordController.getIdByToken(accessToken);
-        logger.info("User login with id {}.", userId);
+        String userId = userFacade.getUserIdByToken(accessToken);
 
-        return new User(userId, accessToken);
+        if (userId == null) {
+            userId = discordController.getIdByToken(accessToken);
+        }
+
+        logger.info("User access with id {}.", userId);
+        return userId;
     }
-
 }

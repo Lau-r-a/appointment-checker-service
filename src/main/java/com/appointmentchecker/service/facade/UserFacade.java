@@ -13,18 +13,22 @@ public class UserFacade {
     @Autowired
     UserRepository userRepository;
 
-    public User createUser(String userId) {
-        User user = new User(userId, null);
+    public User createOrUpdateUser(String userId, String accessToken) {
+        User user = new User(userId, accessToken);
         return userRepository.save(user);
     }
 
     public User getUserById(String userId) {
         Optional<User> userOptional = userRepository.findById(userId);
 
-        if(userOptional.isEmpty()) {
-            throw new IllegalArgumentException("User invalid");
-        }
+        return userOptional.orElse(null);
+    }
 
-        return userOptional.get();
+    public String getUserIdByToken(String accessToken) {
+        User user = userRepository.findByAccessToken(accessToken);
+        if (user == null) {
+            return null;
+        }
+        return user.getId();
     }
 }

@@ -4,7 +4,6 @@ import com.appointmentchecker.service.drlib.DrLibController;
 import com.appointmentchecker.service.drlib.DrLibParams;
 import com.appointmentchecker.service.entities.Notification;
 import com.appointmentchecker.service.entities.NotificationMapping;
-import com.appointmentchecker.service.entities.User;
 import com.appointmentchecker.service.facade.NotificationFacade;
 import com.appointmentchecker.service.facade.UserFacade;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -13,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.*;
 
 @SecurityRequirement(name = "security_auth")
@@ -37,19 +37,14 @@ public class RestController {
         return Boolean.toString(drLibController.isAvailable(drLibParams));
     }
 
-    @PutMapping("/user")
-    public User createUser(@RequestParam String userId) {
-        return userFacade.createUser(userId);
-    }
-
     @PutMapping("/notification")
-    public Notification createNotification(@RequestBody DrLibParams drLibParams, @RequestParam String userId) {
-        return notificationFacade.createNotification(drLibParams, userFacade.getUserById(userId));
+    public Notification createNotification(@RequestBody DrLibParams drLibParams, Principal principal) {
+        return notificationFacade.createNotification(drLibParams, userFacade.getUserById(principal.getName()));
     }
 
    @GetMapping("/notifications")
-   public List<NotificationMapping> getNotifications(@RequestParam String userId) {
-        return notificationFacade.getNotificationMappings(userFacade.getUserById(userId));
+   public List<NotificationMapping> getNotifications(Principal principal) {
+        return notificationFacade.getNotificationMappings(userFacade.getUserById(principal.getName()));
    }
 
    @DeleteMapping("/notification")
