@@ -31,6 +31,19 @@
 	</properties>
 	<dependencies>
 		<dependency>
+			<groupId>net.dv8tion</groupId>
+			<artifactId>JDA</artifactId>
+			<version>5.0.2</version> <!-- replace $version with the latest version -->
+			<!-- Optionally disable audio natives to reduce jar size by excluding `opus-java` -->
+			<exclusions>
+				<exclusion>
+					<groupId>club.minnced</groupId>
+					<artifactId>opus-java</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>

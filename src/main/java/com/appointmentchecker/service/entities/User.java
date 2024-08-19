@@ -16,4 +16,5 @@ public class User {
 
     @Id
     public String id;
+    public String accessToken;
 }

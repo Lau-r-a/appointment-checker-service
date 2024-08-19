@@ -14,7 +14,7 @@ public class UserFacade {
     UserRepository userRepository;
 
     public User createUser(String userId) {
-        User user = new User(userId);
+        User user = new User(userId, null);
         return userRepository.save(user);
     }
 

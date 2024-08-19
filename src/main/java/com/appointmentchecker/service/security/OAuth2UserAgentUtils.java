@@ -1,4 +1,4 @@
-package com.appointmentchecker.service;
+package com.appointmentchecker.service.security;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.RequestEntity;
