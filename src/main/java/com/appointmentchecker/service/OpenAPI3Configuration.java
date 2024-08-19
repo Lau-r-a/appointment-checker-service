@@ -13,6 +13,11 @@ import io.swagger.v3.oas.annotations.security.SecurityScheme;
         flows = @OAuthFlows(authorizationCode = @OAuthFlow(authorizationUrl = "https://discordapp.com/api/oauth2/authorize", tokenUrl = "${spring.security.oauth2.client.provider.discord.token-uri}", scopes = {
                 @OAuthScope(name = "identify", description = "identify"),
         })))
+@SecurityScheme(
+        name = "Discord Bearer Authentication",
+        type = SecuritySchemeType.HTTP,
+        scheme = "bearer"
+)
 public class OpenAPI3Configuration {
 
 }

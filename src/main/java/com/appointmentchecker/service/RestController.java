@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.security.Principal;
 import java.util.*;
 
-@SecurityRequirement(name = "security_auth")
+@SecurityRequirement(name = "Discord Bearer Authentication")
 @org.springframework.web.bind.annotation.RestController
 public class RestController {
 
