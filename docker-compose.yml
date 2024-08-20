@@ -6,6 +6,10 @@ services:
     build: .
     ports:
       - "8080:8080"
+    environment:
+      MONGO_DB_URI: mongodb://root:example@mongo:27017/
+      DISCORD_CLIENT_ID: ${DISCORD_CLIENT_ID}
+      DISCORD_CLIENT_SECRET: ${DISCORD_CLIENT_SECRET}
 
   mongo:
     image: mongo
