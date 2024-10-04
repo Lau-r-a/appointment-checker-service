@@ -62,7 +62,9 @@ public class NotificationFacade {
         NotificationTarget notificationTarget = notificationTargetRepository.findByNotificationListContaining(notification);
 
         //Todo: this is not actually removing anything
-        notificationTarget.getNotificationList().remove(notification);
+        List<Notification> targetList = notificationTarget.getNotificationList();
+        targetList.remove(notification);
+        notificationTarget.setNotificationList(targetList);
 
         notificationTargetRepository.save(notificationTarget);
         notificationRepository.delete(notification);
