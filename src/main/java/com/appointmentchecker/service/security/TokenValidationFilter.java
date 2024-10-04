@@ -7,6 +7,7 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import net.dv8tion.jda.api.exceptions.InvalidTokenException;
+import org.jetbrains.annotations.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ public class TokenValidationFilter extends OncePerRequestFilter {
 
     Logger logger = LoggerFactory.getLogger(TokenValidationFilter.class);
     @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull FilterChain filterChain) throws ServletException, IOException {
         String authHeader = request.getHeader("Authorization");
 
         if (authHeader != null && authHeader.startsWith("Bearer ") && !authHeader.substring(7).isBlank()) {
@@ -40,7 +41,7 @@ public class TokenValidationFilter extends OncePerRequestFilter {
                 Authentication authenticationToken = new UsernamePasswordAuthenticationToken(userId, accessToken, null);
                 SecurityContextHolder.getContext().setAuthentication(authenticationToken);
             } catch (InvalidTokenException e) {
-                logger.error("Can not validate token '{}': {}", accessToken, e.getMessage());
+                logger.error("Can not validate token: {}", e.getMessage());
                 response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
                 return;
             }

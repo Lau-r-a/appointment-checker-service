@@ -22,10 +22,7 @@ public class DiscordController {
         headers.set("Authorization", "Bearer " + token);
         HttpEntity<String> entity = new HttpEntity<>(headers);
 
-        DiscordUserResponse response =
-                restTemplate.exchange(url, HttpMethod.GET, entity, new ParameterizedTypeReference<DiscordUserResponse>() {}).getBody();
-
-        return response;
+        return restTemplate.exchange(url, HttpMethod.GET, entity, new ParameterizedTypeReference<DiscordUserResponse>() {}).getBody();
     }
 
     public String getIdByToken(String token) {
