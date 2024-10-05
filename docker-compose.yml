@@ -10,6 +10,7 @@ services:
       MONGO_DB_URI: mongodb://root:example@mongo:27017/
       DISCORD_CLIENT_ID: ${DISCORD_CLIENT_ID}
       DISCORD_CLIENT_SECRET: ${DISCORD_CLIENT_SECRET}
+      DISCORD_BOT_TOKEN: ${DISCORD_BOT_TOKEN}
 
   mongo:
     image: mongo
