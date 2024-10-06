@@ -2,7 +2,7 @@ package com.appointmentchecker.service.facade;
 
 import com.appointmentchecker.service.drlib.DrLibParams;
 import com.appointmentchecker.service.entities.Notification;
-import com.appointmentchecker.service.entities.NotificationMapping;
+import com.appointmentchecker.service.entities.NotificationDto;
 import com.appointmentchecker.service.entities.NotificationTarget;
 import com.appointmentchecker.service.entities.User;
 import com.appointmentchecker.service.repositories.NotificationRepository;
@@ -43,18 +43,18 @@ public class NotificationFacade {
         return notification;
     }
 
-    public List<NotificationMapping> getNotificationMappings(User user) {
-        List<NotificationMapping> notificationMappingList = new ArrayList<>();
+    public List<NotificationDto> getNotificationMappings(User user) {
+        List<NotificationDto> notificationDtoList = new ArrayList<>();
         List<Notification> notificationList = notificationRepository.findByUser(user);
 
         for(Notification notification : notificationList) {
             NotificationTarget notificationTarget = notificationTargetRepository.findByNotificationListContaining(notification);
             if (notificationTarget != null ) {
-                notificationMappingList.add(new NotificationMapping(notification, notificationTarget.getDrLibParams()));
+                notificationDtoList.add(new NotificationDto(notification, notificationTarget.getDrLibParams()));
             }
         }
 
-        return notificationMappingList;
+        return notificationDtoList;
     }
 
     public void deleteNotification(String notificationId) {

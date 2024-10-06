@@ -3,7 +3,7 @@ package com.appointmentchecker.service;
 import com.appointmentchecker.service.drlib.DrLibController;
 import com.appointmentchecker.service.drlib.DrLibParams;
 import com.appointmentchecker.service.entities.Notification;
-import com.appointmentchecker.service.entities.NotificationMapping;
+import com.appointmentchecker.service.entities.NotificationDto;
 import com.appointmentchecker.service.facade.NotificationFacade;
 import com.appointmentchecker.service.facade.UserFacade;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -43,7 +43,7 @@ public class RestController {
     }
 
    @GetMapping("/notifications")
-   public List<NotificationMapping> getNotifications(Principal principal) {
+   public List<NotificationDto> getNotifications(Principal principal) {
         return notificationFacade.getNotificationMappings(userFacade.getUserById(principal.getName()));
    }
 
