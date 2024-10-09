@@ -25,5 +25,4 @@ public class DiscordBotConfiguration {
         jda.awaitReady();
         return jda;
     }
-
 }
