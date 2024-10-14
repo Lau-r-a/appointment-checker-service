@@ -1,6 +1,6 @@
 package com.appointmentchecker.service.entities;
 
-import com.appointmentchecker.service.drlib.DrLibParams;
+import com.appointmentchecker.service.providers.ProviderData;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,10 +11,10 @@ import lombok.Setter;
 public class NotificationDto {
 
     public String id;
-    DrLibParams drLibParams;
+    ProviderData<?> providerData;
 
-    public NotificationDto (Notification notification, DrLibParams drLibParams) {
+    public NotificationDto (Notification notification, ProviderData<?> providerData) {
         this.id = notification.getId();
-        this.drLibParams = drLibParams;
+        this.providerData = providerData;
     }
 }

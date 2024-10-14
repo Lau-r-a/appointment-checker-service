@@ -1,4 +1,4 @@
-package com.appointmentchecker.service.drlib;
+package com.appointmentchecker.service.providers.drlib;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

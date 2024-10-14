@@ -1,6 +1,6 @@
 package com.appointmentchecker.service.entities;
 
-import com.appointmentchecker.service.drlib.DrLibParams;
+import com.appointmentchecker.service.providers.ProviderData;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,7 +15,7 @@ import java.util.List;
 public class NotificationTarget {
 
     @Id
-    public DrLibParams drLibParams;
+    public ProviderData<?> providerData;
     @DocumentReference
     public List<Notification> notificationList;
 }

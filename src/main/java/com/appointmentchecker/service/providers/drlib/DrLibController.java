@@ -1,4 +1,4 @@
-package com.appointmentchecker.service.drlib;
+package com.appointmentchecker.service.providers.drlib;
 
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;

@@ -1,7 +1,9 @@
 package com.appointmentchecker.service;
 
-import com.appointmentchecker.service.drlib.DrLibController;
-import com.appointmentchecker.service.drlib.DrLibParams;
+import com.appointmentchecker.service.providers.ProviderData;
+import com.appointmentchecker.service.providers.Providers;
+import com.appointmentchecker.service.providers.drlib.DrLibController;
+import com.appointmentchecker.service.providers.drlib.DrLibParams;
 import com.appointmentchecker.service.entities.Notification;
 import com.appointmentchecker.service.entities.NotificationDto;
 import com.appointmentchecker.service.facade.NotificationFacade;
@@ -39,7 +41,8 @@ public class RestController {
 
     @PutMapping("/notification")
     public Notification createNotification(@RequestBody DrLibParams drLibParams, Principal principal) {
-        return notificationFacade.createNotification(drLibParams, userFacade.getUserById(principal.getName()));
+        return notificationFacade.createNotification(new ProviderData<>(drLibParams, Providers.DRLIB) {
+        }, userFacade.getUserById(principal.getName()));
     }
 
    @GetMapping("/notifications")
