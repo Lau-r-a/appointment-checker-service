@@ -1,6 +1,6 @@
 package com.appointmentchecker.service.entities;
 
-import com.appointmentchecker.service.providers.ProviderParams;
+import com.appointmentchecker.service.providers.ProviderData;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,10 +11,10 @@ import lombok.Setter;
 public class NotificationDto {
 
     public String id;
-    ProviderParams<?> params;
+    ProviderData<?> providerData;
 
-    public NotificationDto (Notification notification, ProviderParams<?> params) {
+    public NotificationDto (Notification notification, ProviderData<?> providerData) {
         this.id = notification.getId();
-        this.params = params;
+        this.providerData = providerData;
     }
 }

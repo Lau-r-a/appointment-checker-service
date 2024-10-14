@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @AllArgsConstructor @Getter @Setter
-public class ProviderParams<T> {
+public class ProviderData<T> {
     private T params;
+    private Providers provider = Providers.DRLIB;
 }

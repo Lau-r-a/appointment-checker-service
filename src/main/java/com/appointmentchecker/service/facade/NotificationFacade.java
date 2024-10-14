@@ -1,6 +1,6 @@
 package com.appointmentchecker.service.facade;
 
-import com.appointmentchecker.service.providers.ProviderParams;
+import com.appointmentchecker.service.providers.ProviderData;
 import com.appointmentchecker.service.entities.Notification;
 import com.appointmentchecker.service.entities.NotificationDto;
 import com.appointmentchecker.service.entities.NotificationTarget;
@@ -24,10 +24,10 @@ public class NotificationFacade {
     NotificationRepository notificationRepository;
 
 
-    public Notification createNotification(ProviderParams<?> params, User user) {
+    public Notification createNotification(ProviderData<?> params, User user) {
 
         Notification notification = new Notification(UUID.randomUUID().toString(), user);
-        NotificationTarget target = notificationTargetRepository.findByParams(params);
+        NotificationTarget target = notificationTargetRepository.findByProviderData(params);
         if (target == null) {
             List<Notification> notificationList = new ArrayList<>();
             notificationList.add(notification);
@@ -50,7 +50,7 @@ public class NotificationFacade {
         for(Notification notification : notificationList) {
             NotificationTarget notificationTarget = notificationTargetRepository.findByNotificationListContaining(notification);
             if (notificationTarget != null ) {
-                notificationDtoList.add(new NotificationDto(notification, notificationTarget.getParams()));
+                notificationDtoList.add(new NotificationDto(notification, notificationTarget.getProviderData()));
             }
         }
 
