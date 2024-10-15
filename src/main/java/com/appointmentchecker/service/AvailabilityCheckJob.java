@@ -52,7 +52,7 @@ public class AvailabilityCheckJob {
 
                         discordBotController.sendPrivateMessage(
                                 notification.getUser().getId(),
-                                "Appointment Available! Notification: " + notification.getId()
+                                "Appointment Available! " + notification.getDescription()
                         );
                     }
                 } else {
