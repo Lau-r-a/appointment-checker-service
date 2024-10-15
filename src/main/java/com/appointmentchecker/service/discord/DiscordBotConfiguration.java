@@ -1,4 +1,4 @@
-package com.appointmentchecker.service;
+package com.appointmentchecker.service.discord;
 
 import lombok.RequiredArgsConstructor;
 import net.dv8tion.jda.api.JDA;

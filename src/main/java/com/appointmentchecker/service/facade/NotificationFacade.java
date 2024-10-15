@@ -77,4 +77,8 @@ public class NotificationFacade {
         }
         return notification.get();
     }
+
+    public List<NotificationTarget> getNotificationTargets() {
+        return notificationTargetRepository.findAll();
+    }
 }

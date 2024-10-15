@@ -1,4 +1,4 @@
-package com.appointmentchecker.service;
+package com.appointmentchecker.service.api;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;

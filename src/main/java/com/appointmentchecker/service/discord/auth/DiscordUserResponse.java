@@ -1,4 +1,4 @@
-package com.appointmentchecker.service.discord;
+package com.appointmentchecker.service.discord.auth;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

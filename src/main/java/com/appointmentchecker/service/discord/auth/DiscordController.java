@@ -1,4 +1,4 @@
-package com.appointmentchecker.service.discord;
+package com.appointmentchecker.service.discord.auth;
 
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;

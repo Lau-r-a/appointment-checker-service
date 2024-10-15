@@ -1,6 +1,6 @@
 package com.appointmentchecker.service.security;
 
-import com.appointmentchecker.service.discord.DiscordController;
+import com.appointmentchecker.service.discord.auth.DiscordController;
 import com.appointmentchecker.service.facade.UserFacade;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

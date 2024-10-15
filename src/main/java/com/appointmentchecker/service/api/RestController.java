@@ -1,4 +1,4 @@
-package com.appointmentchecker.service;
+package com.appointmentchecker.service.api;
 
 import com.appointmentchecker.service.providers.ProviderData;
 import com.appointmentchecker.service.providers.Providers;
