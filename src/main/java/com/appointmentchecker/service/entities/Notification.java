@@ -17,4 +17,5 @@ public class Notification {
     public String id;
     @DocumentReference
     public User user;
+    public String description;
 }

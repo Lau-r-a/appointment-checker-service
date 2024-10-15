@@ -11,10 +11,12 @@ import lombok.Setter;
 public class NotificationDto {
 
     public String id;
+    public String description;
     ProviderData<?> providerData;
 
     public NotificationDto (Notification notification, ProviderData<?> providerData) {
         this.id = notification.getId();
+        this.description = notification.getDescription();
         this.providerData = providerData;
     }
 }

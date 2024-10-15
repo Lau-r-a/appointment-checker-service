@@ -40,9 +40,9 @@ public class RestController {
     }
 
     @PutMapping("/notification")
-    public Notification createNotification(@RequestBody DrLibParams drLibParams, Principal principal) {
+    public Notification createNotification(@RequestBody DrLibParams drLibParams, @RequestBody String description, Principal principal) {
         return notificationFacade.createNotification(new ProviderData<>(drLibParams, Providers.DRLIB) {
-        }, userFacade.getUserById(principal.getName()));
+        }, userFacade.getUserById(principal.getName()), description);
     }
 
    @GetMapping("/notifications")
