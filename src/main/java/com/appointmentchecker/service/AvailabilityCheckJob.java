@@ -50,9 +50,9 @@ public class AvailabilityCheckJob {
 
                         logger.info("Notify user {} for notification {}", notification.getUser().getId(), notification.getId());
 
-                        discordBotController.sendPrivateMessage(
+                        discordBotController.sendPrivateMessageEmbeds(
                                 notification.getUser().getId(),
-                                "Appointment Available! " + notification.getDescription()
+                                notification.getDescription()
                         );
                     }
                 } else {
