@@ -1,8 +1,10 @@
 package com.appointmentchecker.service.api;
 
+import com.appointmentchecker.service.entities.DrLibInfoDto;
 import com.appointmentchecker.service.providers.ProviderData;
 import com.appointmentchecker.service.providers.Providers;
 import com.appointmentchecker.service.providers.drlib.DrLibController;
+import com.appointmentchecker.service.providers.drlib.DrLibInfoResponse;
 import com.appointmentchecker.service.providers.drlib.DrLibParams;
 import com.appointmentchecker.service.entities.Notification;
 import com.appointmentchecker.service.entities.NotificationDto;
@@ -10,6 +12,8 @@ import com.appointmentchecker.service.facade.NotificationFacade;
 import com.appointmentchecker.service.facade.UserFacade;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -28,6 +32,8 @@ public class RestController {
     @Autowired
     UserFacade userFacade;
 
+    Logger logger = LoggerFactory.getLogger(RestController.class);
+
     @GetMapping("/")
     public String index() throws JsonProcessingException {
         return Boolean.toString(drLibController.isAvailable(2208180, 352260, 138926, "public", false, 5, new Date()));
@@ -45,13 +51,20 @@ public class RestController {
         }, userFacade.getUserById(principal.getName()), description);
     }
 
-   @GetMapping("/notifications")
-   public List<NotificationDto> getNotifications(Principal principal) {
+    @GetMapping("/notifications")
+    public List<NotificationDto> getNotifications(Principal principal) {
         return notificationFacade.getNotificationMappings(userFacade.getUserById(principal.getName()));
-   }
+    }
 
-   @DeleteMapping("/notification")
+    @DeleteMapping("/notification")
     public void deleteNotifications(@RequestParam String notificationId) {
         notificationFacade.deleteNotification(notificationId);
-   }
+    }
+
+    @GetMapping("/drlibparams-from-public-url")
+    public DrLibInfoDto getParametersFromUrl(@RequestParam String url) {
+        DrLibInfoResponse infoResponse = drLibController.requestDrLibInfoFromPublicUrl(url);
+        return new DrLibInfoDto(infoResponse, drLibController.filterDrLibParamsFromResponse(url, infoResponse));
+    }
+
 }
