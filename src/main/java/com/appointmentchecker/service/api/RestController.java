@@ -45,10 +45,20 @@ public class RestController {
         return Boolean.toString(drLibController.isAvailable(drLibParams));
     }
 
-    @PutMapping("/notification")
-    public Notification createNotification(@RequestBody DrLibParams drLibParams, @RequestBody String description, Principal principal) {
+    @PostMapping("/notification")
+    public Notification createNotification(@RequestBody DrLibParams drLibParams, @RequestBody String name, @RequestBody String description, Principal principal) {
         return notificationFacade.createNotification(new ProviderData<>(drLibParams, Providers.DRLIB) {
-        }, userFacade.getUserById(principal.getName()), description);
+        }, userFacade.getUserById(principal.getName()), name, description);
+    }
+
+    @PostMapping("/notification-from-url")
+    public Notification createNotificationFromUrl(@RequestBody String url, @RequestBody String description, Principal principal) {
+        logger.info("Received requests for {} with {}", url, description);
+        DrLibInfoResponse infoResponse = drLibController.requestDrLibInfoFromPublicUrl(url);
+        DrLibParams drLibParams = drLibController.filterDrLibParamsFromResponse(url, infoResponse);
+
+        return notificationFacade.createNotification(new ProviderData<>(drLibParams, Providers.DRLIB) {
+        }, userFacade.getUserById(principal.getName()), infoResponse.getName(), description);
     }
 
     @GetMapping("/notifications")

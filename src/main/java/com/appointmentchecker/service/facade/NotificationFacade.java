@@ -24,9 +24,9 @@ public class NotificationFacade {
     NotificationRepository notificationRepository;
 
 
-    public Notification createNotification(ProviderData<?> params, User user, String description) {
+    public Notification createNotification(ProviderData<?> params, User user, String name, String description) {
 
-        Notification notification = new Notification(UUID.randomUUID().toString(), user, description);
+        Notification notification = new Notification(UUID.randomUUID().toString(), name, description, user);
         NotificationTarget target = notificationTargetRepository.findByProviderData(params);
         if (target == null) {
             List<Notification> notificationList = new ArrayList<>();

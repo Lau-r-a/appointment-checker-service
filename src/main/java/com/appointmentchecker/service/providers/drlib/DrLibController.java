@@ -73,6 +73,7 @@ public class DrLibController {
                 .filter(drLibAgenda -> drLibAgenda.getPractitionerId() == (practitionerId != null ? Integer.parseInt(practitionerId) : drLibAgenda.getPractitionerId()))
                 .filter(drLibAgenda -> drLibAgenda.getPracticeId() == (pid != null ? Integer.parseInt(pid) : drLibAgenda.getPracticeId()))
                 .filter(drLibAgenda -> drLibAgenda.getVisitMotiveIds().stream().mapToLong(i -> i).filter(i -> i == Integer.parseInt(motiveId)).findAny().isPresent())
+                .filter(drLibAgenda -> !drLibAgenda.isBookingDisabled())
                 .findAny().get();
 
         return new DrLibParams(Integer.parseInt(motiveId), agenda.getId(), Integer.parseInt(pid), insuranceSector, telehealth);

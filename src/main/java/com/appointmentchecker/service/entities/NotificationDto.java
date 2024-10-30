@@ -11,6 +11,7 @@ import lombok.Setter;
 public class NotificationDto {
 
     public String id;
+    public String name;
     public String description;
     ProviderData<?> providerData;
 
@@ -18,5 +19,6 @@ public class NotificationDto {
         this.id = notification.getId();
         this.description = notification.getDescription();
         this.providerData = providerData;
+        this.name = notification.getName();
     }
 }
