@@ -1,8 +1,8 @@
 package com.appointmentchecker.service;
 
 import com.appointmentchecker.service.discord.bot.DiscordBotController;
-import com.appointmentchecker.service.entities.Notification;
-import com.appointmentchecker.service.entities.NotificationTarget;
+import com.appointmentchecker.service.entities.model.Notification;
+import com.appointmentchecker.service.entities.model.NotificationTarget;
 import com.appointmentchecker.service.facade.NotificationFacade;
 import com.appointmentchecker.service.providers.Providers;
 import com.appointmentchecker.service.providers.drlib.DrLibController;

@@ -1,4 +1,4 @@
-package com.appointmentchecker.service.entities;
+package com.appointmentchecker.service.entities.dto;
 
 import com.appointmentchecker.service.providers.drlib.DrLibInfoResponse;
 import com.appointmentchecker.service.providers.drlib.DrLibParams;

@@ -1,10 +1,10 @@
 package com.appointmentchecker.service.facade;
 
 import com.appointmentchecker.service.providers.ProviderData;
-import com.appointmentchecker.service.entities.Notification;
-import com.appointmentchecker.service.entities.NotificationDto;
-import com.appointmentchecker.service.entities.NotificationTarget;
-import com.appointmentchecker.service.entities.User;
+import com.appointmentchecker.service.entities.model.Notification;
+import com.appointmentchecker.service.entities.dto.NotificationDto;
+import com.appointmentchecker.service.entities.model.NotificationTarget;
+import com.appointmentchecker.service.entities.model.User;
 import com.appointmentchecker.service.repositories.NotificationRepository;
 import com.appointmentchecker.service.repositories.NotificationTargetRepository;
 import org.springframework.beans.factory.annotation.Autowired;

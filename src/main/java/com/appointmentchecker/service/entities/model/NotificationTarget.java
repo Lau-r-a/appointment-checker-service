@@ -1,4 +1,4 @@
-package com.appointmentchecker.service.entities;
+package com.appointmentchecker.service.entities.model;
 
 import com.appointmentchecker.service.providers.ProviderData;
 import lombok.AllArgsConstructor;

@@ -1,16 +1,18 @@
 package com.appointmentchecker.service.api;
 
-import com.appointmentchecker.service.entities.DrLibInfoDto;
+import com.appointmentchecker.service.entities.dto.CreateNotificationDto;
+import com.appointmentchecker.service.entities.dto.DrLibInfoDto;
 import com.appointmentchecker.service.providers.ProviderData;
 import com.appointmentchecker.service.providers.Providers;
 import com.appointmentchecker.service.providers.drlib.DrLibController;
 import com.appointmentchecker.service.providers.drlib.DrLibInfoResponse;
 import com.appointmentchecker.service.providers.drlib.DrLibParams;
-import com.appointmentchecker.service.entities.Notification;
-import com.appointmentchecker.service.entities.NotificationDto;
+import com.appointmentchecker.service.entities.model.Notification;
+import com.appointmentchecker.service.entities.dto.NotificationDto;
 import com.appointmentchecker.service.facade.NotificationFacade;
 import com.appointmentchecker.service.facade.UserFacade;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -45,20 +47,30 @@ public class RestController {
         return Boolean.toString(drLibController.isAvailable(drLibParams));
     }
 
+    @Operation(summary = "Create a new notification, one of either URL or DrLibParams have to be set.")
     @PostMapping("/notification")
-    public Notification createNotification(@RequestBody DrLibParams drLibParams, @RequestBody String name, @RequestBody String description, Principal principal) {
-        return notificationFacade.createNotification(new ProviderData<>(drLibParams, Providers.DRLIB) {
-        }, userFacade.getUserById(principal.getName()), name, description);
-    }
+    public Notification createNotification(@RequestBody CreateNotificationDto createNotificationDto, Principal principal) {
 
-    @PostMapping("/notification-from-url")
-    public Notification createNotificationFromUrl(@RequestBody String url, @RequestBody String description, Principal principal) {
-        logger.info("Received requests for {} with {}", url, description);
-        DrLibInfoResponse infoResponse = drLibController.requestDrLibInfoFromPublicUrl(url);
-        DrLibParams drLibParams = drLibController.filterDrLibParamsFromResponse(url, infoResponse);
+        DrLibParams drLibParams;
+        String name;
 
-        return notificationFacade.createNotification(new ProviderData<>(drLibParams, Providers.DRLIB) {
-        }, userFacade.getUserById(principal.getName()), infoResponse.getName(), description);
+        if (createNotificationDto.getDrLibParams() == null && createNotificationDto.getUrl() != null) {
+            DrLibInfoResponse infoResponse = drLibController.requestDrLibInfoFromPublicUrl(createNotificationDto.getUrl());
+            drLibParams = drLibController.filterDrLibParamsFromResponse(createNotificationDto.getUrl(), infoResponse);
+            name = infoResponse.getName();
+        } else if (createNotificationDto.getDrLibParams() != null) {
+            drLibParams = createNotificationDto.getDrLibParams();
+            name = createNotificationDto.getName();
+        } else {
+            throw new IllegalArgumentException();
+        }
+
+        return notificationFacade.createNotification(
+                new ProviderData<>(drLibParams, Providers.DRLIB),
+                userFacade.getUserById(principal.getName()),
+                name,
+                createNotificationDto.getDescription()
+        );
     }
 
     @GetMapping("/notifications")

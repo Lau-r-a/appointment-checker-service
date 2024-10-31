@@ -1,5 +1,6 @@
-package com.appointmentchecker.service.entities;
+package com.appointmentchecker.service.entities.dto;
 
+import com.appointmentchecker.service.entities.model.Notification;
 import com.appointmentchecker.service.providers.ProviderData;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
