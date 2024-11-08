@@ -11,7 +11,6 @@ import com.appointmentchecker.service.entities.model.Notification;
 import com.appointmentchecker.service.entities.dto.NotificationDto;
 import com.appointmentchecker.service.facade.NotificationFacade;
 import com.appointmentchecker.service.facade.UserFacade;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.slf4j.Logger;
@@ -36,11 +35,6 @@ public class RestController {
 
     Logger logger = LoggerFactory.getLogger(RestController.class);
 
-    @GetMapping("/")
-    public String index() throws JsonProcessingException {
-        return Boolean.toString(drLibController.isAvailable(2208180, 352260, 138926, "public", false, 5, new Date()));
-    }
-
     @PostMapping("/checkAppointment")
     @ResponseStatus(HttpStatus.CREATED)
     public String checkAppointment(@RequestBody DrLibParams drLibParams) {
@@ -49,7 +43,7 @@ public class RestController {
 
     @Operation(summary = "Create a new notification, one of either URL or DrLibParams have to be set.")
     @PostMapping("/notification")
-    public Notification createNotification(@RequestBody CreateNotificationDto createNotificationDto, Principal principal) {
+    public NotificationDto createNotification(@RequestBody CreateNotificationDto createNotificationDto, Principal principal) {
 
         DrLibParams drLibParams;
         String name;
@@ -65,12 +59,14 @@ public class RestController {
             throw new IllegalArgumentException();
         }
 
-        return notificationFacade.createNotification(
+        Notification notification = notificationFacade.createNotification(
                 new ProviderData<>(drLibParams, Providers.DRLIB),
                 userFacade.getUserById(principal.getName()),
                 name,
                 createNotificationDto.getDescription()
         );
+
+        return new NotificationDto(notification, new ProviderData<>(drLibParams, Providers.DRLIB));
     }
 
     @GetMapping("/notifications")
@@ -83,10 +79,10 @@ public class RestController {
         notificationFacade.deleteNotification(notificationId);
     }
 
-    @GetMapping("/drlibparams-from-public-url")
+    /** I dont think we need this anymore? @GetMapping("/drlibparams-from-public-url")
     public DrLibInfoDto getParametersFromUrl(@RequestParam String url) {
         DrLibInfoResponse infoResponse = drLibController.requestDrLibInfoFromPublicUrl(url);
         return new DrLibInfoDto(infoResponse, drLibController.filterDrLibParamsFromResponse(url, infoResponse));
-    }
+    }**/
 
 }
