@@ -1,7 +1,6 @@
 package com.appointmentchecker.service.api;
 
 import com.appointmentchecker.service.entities.dto.CreateNotificationDto;
-import com.appointmentchecker.service.entities.dto.DrLibInfoDto;
 import com.appointmentchecker.service.providers.ProviderData;
 import com.appointmentchecker.service.providers.Providers;
 import com.appointmentchecker.service.providers.drlib.DrLibController;
@@ -78,11 +77,4 @@ public class RestController {
     public void deleteNotifications(@RequestParam String notificationId) {
         notificationFacade.deleteNotification(notificationId);
     }
-
-    /** I dont think we need this anymore? @GetMapping("/drlibparams-from-public-url")
-    public DrLibInfoDto getParametersFromUrl(@RequestParam String url) {
-        DrLibInfoResponse infoResponse = drLibController.requestDrLibInfoFromPublicUrl(url);
-        return new DrLibInfoDto(infoResponse, drLibController.filterDrLibParamsFromResponse(url, infoResponse));
-    }**/
-
 }
