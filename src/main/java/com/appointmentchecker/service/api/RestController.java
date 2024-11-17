@@ -1,5 +1,7 @@
 package com.appointmentchecker.service.api;
 
+import com.appointmentchecker.service.discord.auth.DiscordController;
+import com.appointmentchecker.service.discord.auth.LoginResponse;
 import com.appointmentchecker.service.entities.dto.CreateNotificationDto;
 import com.appointmentchecker.service.providers.ProviderData;
 import com.appointmentchecker.service.providers.Providers;
@@ -31,6 +33,8 @@ public class RestController {
     NotificationFacade notificationFacade;
     @Autowired
     UserFacade userFacade;
+    @Autowired
+    DiscordController discordController;
 
     Logger logger = LoggerFactory.getLogger(RestController.class);
 
@@ -76,5 +80,10 @@ public class RestController {
     @DeleteMapping("/notification")
     public void deleteNotifications(@RequestParam String notificationId) {
         notificationFacade.deleteNotification(notificationId);
+    }
+
+    @PostMapping("/login")
+    public LoginResponse login(@RequestParam String code, @RequestParam String redirect_uri) {
+        return discordController.performLoginRequest(code, redirect_uri);
     }
 }
