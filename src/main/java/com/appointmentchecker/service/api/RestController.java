@@ -14,8 +14,6 @@ import com.appointmentchecker.service.facade.NotificationFacade;
 import com.appointmentchecker.service.facade.UserFacade;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -35,8 +33,6 @@ public class RestController {
     UserFacade userFacade;
     @Autowired
     DiscordController discordController;
-
-    Logger logger = LoggerFactory.getLogger(RestController.class);
 
     @PostMapping("/checkAppointment")
     @ResponseStatus(HttpStatus.CREATED)

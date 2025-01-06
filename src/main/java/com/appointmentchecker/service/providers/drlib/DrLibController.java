@@ -1,7 +1,6 @@
 package com.appointmentchecker.service.providers.drlib;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Component;
@@ -15,10 +14,9 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 
+@Slf4j
 @Component
 public class DrLibController {
-
-    Logger logger = LoggerFactory.getLogger(DrLibController.class);
 
     public boolean isAvailable(DrLibParams params) {
         return isAvailable(
@@ -85,7 +83,7 @@ public class DrLibController {
         String slug = uri.getPathSegments().get(2);
         String infoUrl = String.format("https://www.doctolib.de/online_booking/api/slot_selection_funnel/v1/info.json?profile_slug=%s", slug);
 
-        logger.info("Deserialized to DrLibInfoResponse Object from {}", infoUrl);
+        log.info("Deserialized to DrLibInfoResponse Object from {}", infoUrl);
 
         RestTemplate restTemplate = new RestTemplate();
         return restTemplate.getForEntity(infoUrl, DrLibInfoResponse.class).getBody();
